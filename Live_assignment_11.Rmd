@@ -1,0 +1,73 @@
+---
+title: "Live Session Assignment 11"
+author: "Jesse Chen"
+date: "November 19, 2016"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(fpp)
+data("hsales")
+```
+
+## Question 1
+
+a)	Plot the time series. Can you identify seasonal fluctuations and/or a trend? 
+
+
+```{r cars, echo=FALSE}
+plot(hsales)
+```
+
+As you can see there appears to be both a seasonal trend as well as smaller fluctuations within in the plot 
+
+## Question 2
+
+b)	Use a classical decomposition to calculate the trend-cycle and seasonal indices. 
+
+```{r decompose, echo=FALSE}
+fitd <- decompose(hsales)
+plot(fitd)
+```
+
+## Question 3
+
+c)	Do the results support the graphical interpretation from part (a)? 
+
+# Answer 
+Yes it does.
+
+## Question 4
+
+d)	Compute and plot the seasonally adjusted data. 
+
+```{r seasadj, echo=FALSE}
+fit <- stl(hsales, s.window=5)
+plot(fit)
+```
+
+## Question 5
+
+e)	Change one observation to be an outlier (e.g., add 500 to one observation), and recompute the seasonally adjusted data. What is the effect of the outlier? 
+
+```{r outlier, echo=FALSE}
+hsales2<-ts(c(hsales[1:54],hsales[55]+200,hsales[56:275], start=c(1973,1),frequency=12))
+plot(hsales2)
+
+```
+
+The spike mostly shows up in the remainder chart. 
+
+## Question 6 
+
+f)	Does it make any difference if the outlier is near the end rather than in the middle of the time series? 
+
+No, it will only move where the spike shows up. 
+
+## Question 7
+
+g)	Use STL to decompose the series. 
+
+
+hsales2std <- stl(hsales2, s.window = 5)
